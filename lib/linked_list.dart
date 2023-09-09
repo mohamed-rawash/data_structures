@@ -11,10 +11,12 @@ class Node<T> {
   }
 }
 
-class LinkedList<E> {
+class LinkedList<E> extends Iterable<E> {
 
   Node<E>? head;
   Node<E>? tail;
+
+  @override
   bool get isEmpty => head == null;
 
   @override
@@ -96,4 +98,34 @@ class LinkedList<E> {
     return value;
   }
 
+  @override
+  Iterator<E> get iterator => _LinkedListIterator(this);
+
+}
+
+class _LinkedListIterator<E> implements Iterator<E> {
+  _LinkedListIterator(LinkedList<E> list) : _list = list;
+  final LinkedList<E> _list;
+
+  Node<E>? _currentNode;
+  bool _firstPass = true;
+
+
+  @override
+  E get current => _currentNode!.value;
+
+  @override
+  bool moveNext() {
+    // 1
+    if (_list.isEmpty) return false;
+    // 2
+    if (_firstPass) {
+      _currentNode = _list.head;
+    _firstPass = false;
+    } else {
+    _currentNode = _currentNode?.next;
+    }
+    // 3
+    return _currentNode != null;
+  }
 }

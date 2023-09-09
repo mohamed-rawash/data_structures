@@ -55,3 +55,8 @@ void printListItemsReversed<E>(List<E> items) {
   }
   print(result);
 }
+
+
+class TestC {
+  TestC._();
+}
